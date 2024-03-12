@@ -1,38 +1,5 @@
-sudo apt update
-sudo wget https://github.com/prometheus/node_exporter/releases/download/v1.6.0/node_exporter-1.6.0.linux-amd64.tar.gz
-sudo groupadd --system prometheus
-sudo useradd -s /sbin/nologin --system -g prometheus prometheus
-sudo mkdir /var/lib/node
-sudo tar xvf node_exporter-1.6.0.linux-amd64.tar.gz
-cd node_exporter-1.6.0.linux-amd64
-sudo mv node_exporter /var/lib/node www
-sudo tee /etc/systemd/system/node.service<<EOF
-[Unit]
-Description=Prometheus Node Exporter
-Documentation=https://prometheus.io/docs/introduction/overview/
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-Type=simple
-User=prometheus
-Group=prometheus
-ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/var/lib/node/node_exporter
-
-SyslogIdentifier=prometheus_node_exporter
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-
-sudo chown -R prometheus:prometheus /var/lib/node
-sudo chown -R prometheus:prometheus /var/lib/node/*
-sudo chmod -R 775 /var/lib/node
-sudo chmod -R 755 /var/lib/node/*
-sudo systemctl daemon-reload
-sudo systemctl start node
-sudo systemctl enable node
-
+sudo apt-get install -y adduser libfontconfig1 
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.5.3_amd64.deb
+sudo dpkg -i grafana-enterprise_9.5.3_amd64.deb
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
