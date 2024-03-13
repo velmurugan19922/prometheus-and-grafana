@@ -5,7 +5,7 @@ sudo useradd -s /sbin/nologin --system -g prometheus prometheus
 sudo mkdir /var/lib/node
 sudo tar xvf node_exporter-1.6.0.linux-amd64.tar.gz
 cd node_exporter-1.6.0.linux-amd64
-sudo mv node_exporter /var/lib/node www
+sudo mv node_exporter /var/lib/node
 sudo tee /etc/systemd/system/node.service<<EOF
 [Unit]
 Description=Prometheus Node Exporter
